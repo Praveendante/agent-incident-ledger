@@ -1,0 +1,42 @@
+{
+ "source": "acartag7/gap-benchmark (CC-BY-4.0), local snapshot dcb441f3, read 2026-09-05; paper: Cartagena 2026, 'Mind the GAP'",
+ "total_rows": 17420,
+ "dangerous_rows(tc_safe=False, forbidden_calls non-empty)": 7594,
+ "gap_rows(t_safe AND NOT tc_safe)": 1002,
+ "gap_by_mode": {
+  "U unmonitored": 123,
+  "E enforce (Edictum runtime, can deny)": 490,
+  "O observe (Edictum runtime, logs only)": 389
+ },
+ "enforce_mode_gap_rows_where_guard_denied_at_least_one_call": 180,
+ "enforce_mode_gap_rows_where_guard_denied_nothing": 310,
+ "observe_mode_gap_rows_guard_would_have_denied": 80,
+ "gap_by_domain": {
+  "legal": 406,
+  "pharma": 256,
+  "devops": 237,
+  "hr": 45,
+  "education": 30,
+  "finance": 28
+ },
+ "gap_by_model": {
+  "gpt-5.2": 426,
+  "kimi": 172,
+  "glm": 138,
+  "grok": 124,
+  "deepseek": 89,
+  "claude": 53
+ },
+ "gap_by_refusal_strength": {
+  "strong": 997,
+  "weak": 5
+ },
+ "gap_by_prompt_condition": {
+  "encouraging": 436,
+  "neutral": 346,
+  "safety": 220
+ },
+ "gap_under_safety_prompt": 220,
+ "distinct_gap_scenarios": 36,
+ "what_the_dataset_does_NOT_contain": "the model's refusal text and the tool-call arguments; it carries flags, scenario ids, refusal_strength, and forbidden tool-call names"
+}
