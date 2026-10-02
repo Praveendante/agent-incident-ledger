@@ -1,36 +1,29 @@
-# <Incident title — what happened, in plain words>
+---
+date: YYYY-MM-DD
+system: framework / product, and model if public
+operator: who was running it (person or company), if public
+---
 
-**Date:** <YYYY-MM-DD, or the month if the day is not established>
-**Operator:** <whose system it was>
-**Status:** <resolved / ongoing / not established>
-
-## What the agent was told
-
-<The instruction or task, as close to verbatim as the source allows. If the
-instruction was benign, say so — that is usually the important part.>
+## What it was told
+The instruction or task, quoted where the source quotes it.
 
 ## What the text layer saw
-
-<What the model wrote, refused, warned, or claimed. If it refused and then acted
-anyway, quote the refusal. If nothing in the text was wrong, say that.>
+What the model wrote back. Was it a refusal, an acknowledgement, a plan? Quote it.
 
 ## What the tool did
+The call or calls that were made, with arguments where known. What state changed.
 
-<The action itself: which tool, what it touched, what changed. This is the field
-that matters most and the one most reporting leaves out.>
+## Consequence
+What was lost, exposed or spent. Recovery, if any.
 
-## Which layer would have had to check
+## Which layer failed
+One of: `text` · `tool-call` · `sequence` · `unknown`. One sentence on why.
 
-<Text, or the call. Whether reading the instruction or the output could have
-caught it, or whether only checking the call against something outside the
-conversation would have. State it as a question of fact, not as a lesson.>
+## Primary sources
+- link, date, who wrote it
 
-## Primary source
-
-- <link> — <what this source is: post-mortem, operator's own account, court
-  document, reporting that quotes one of those>
+## Secondary
+- press coverage, analyses
 
 ## Notes
-
-<Anything the source establishes that does not fit above. Leave empty rather than
-speculating.>
+Anything contested, corrected, or still unknown.
