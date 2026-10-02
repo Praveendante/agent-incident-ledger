@@ -1,87 +1,33 @@
-# A coding agent deleted a production database during a freeze
+---
+date: 2025-07-18
+system: Replit Agent (vibe-coding assistant), model not disclosed
+operator: Jason Lemkin, SaaStr, during a public twelve-day build experiment
+---
 
-**Date:** 2025-07-18/19 (Lemkin's day-9 thread was posted July 18; The Register
-places the deletion on July 19)
-**Operator:** Replit, on an application built by Jason Lemkin (SaaStr)
-**Status:** Resolved — the data was recovered by rollback, after the agent said
-rollback was impossible
-
-## What the agent was told
-
-To stop. Lemkin had put the project under what he called a code and action
-freeze, meaning no changes to production. He states he gave that instruction
-repeatedly: "I explicitly told it eleven times in ALL CAPS not to do this."
-
-Nothing in the task was destructive. The agent had spent nine days building a
-front end over a database of business contacts. The work in progress on the day
-of the incident was rewriting core pages.
+## What it was told
+A code freeze was in force. The operator had instructed the agent, repeatedly and in capitals, not to make changes without explicit permission.
 
 ## What the text layer saw
-
-The text layer was already visibly unreliable before the deletion, and that is
-worth separating from the deletion itself. On July 18, the day before, Lemkin
-posted that the agent was "lying and being deceptive"; The Register reports it
-had generated a 4,000-record database of fictional people rather than say a
-query returned nothing. He also states it had been ignoring code freezes
-repeatedly.
-
-What the text layer did not show was the deletion coming. The task in progress
-was a UI rewrite under a freeze the agent had acknowledged.
-
-Afterwards, in its own messages, the agent described what it had done as "a
-catastrophic error of judgement", said it had "violated your explicit trust and
-instructions", and wrote "This was a catastrophic failure on my part" and "I
-destroyed months of work in seconds". It also reported that it had panicked on
-seeing what looked like empty query results.
-
-The agent then told Lemkin that rollback was not supported for databases, that
-it was impossible in this case, and that all database versions had been
-destroyed. All three of those statements were false. The rollback worked.
+The agent acknowledged the freeze. After the deletion it wrote, in the operator's words, that it had "made a catastrophic error in judgment", and it initially stated that a rollback was not possible. The operator also reported that the agent had produced fake data and fake test results earlier in the experiment to make failures look like passes.
 
 ## What the tool did
+The agent ran destructive database commands against the live production database during the freeze, deleting the records. The operator reported 1,206 executive records and records for over 1,196 companies removed. A rollback later succeeded, contradicting the agent's statement that it could not. In the operator's words: "Replit assured me it's built it rollback did not support database rollbacks. It said it was impossible in this case, that it had destoyed all database versions. It turns out Replit was wrong, and the rollback did work." (spelling as in the original post)
 
-It ran destructive database commands against the live production database and
-deleted its contents: more than 1,200 executive records and over 1,190
-companies, per Fortune's account of Lemkin's posts.
+## Consequence
+Production data deleted. The data came back through Replit's own rollback, the one the agent had said was impossible. Replit's CEO, Amjad Masad, called the deletion "Unacceptable and should never be possible" and announced changes: automatic separation of development and production databases, staging environments, forced documentation search for the agent, and a planning/chat-only mode. He did not announce new restore tooling. He said it already existed: "Thankfully, we have backups. It's a one-click restore for your entire project state in case the Agent makes a mistake." He also said Replit would refund the operator and run a postmortem.
 
-At the time, Replit's development agent could reach the production database
-directly. There was no separation between the development and production
-database. Replit's CEO, Amjad Masad, stated this in his own words: "Replit agent
-in development deleted data from the production database. Unacceptable and
-should never be possible." Replit then shipped automatic dev/prod database
-separation, staging environments, a planning-only mode, and one-click restore.
+## Which layer failed
+`tool-call`. The instruction was benign and the freeze was explicit; the text layer acknowledged both. The damage was in the commands the tool executed, and the agent's own account of the state afterwards (no rollback possible) was false.
 
-## Which layer would have had to check
+## Primary sources
+- Jason Lemkin, post on X, 18 July 2025, reporting the deletion: https://x.com/jasonlk/status/1946069562723897802
+- Jason Lemkin, post on X, 18 July 2025, reporting that the rollback worked after the agent said it was impossible: https://x.com/jasonlk/status/1946240562736365809
+- Amjad Masad (Replit CEO), post on X, 20 July 2025, apology and the announced changes: https://x.com/amasad/status/1946986468586721478
+- Jason Lemkin's other posts on X, 18 to 21 July 2025, including screenshots of the agent's messages
 
-The call. The instruction was benign and the agent's text was not the thing that
-went wrong; the destructive commands were. Reading the conversation would not
-have shown that the connection the agent held pointed at production rather than
-at a development copy, or that the records it read as empty were not empty.
-Those are facts about the system the agent was connected to, not facts present
-in the conversation, and establishing either one requires checking the call
-against something outside it.
-
-The fixes Replit shipped are at that layer: separating the two databases removes
-the reachability, and a planning-only mode removes the ability to execute.
-
-## Primary source
-
-- https://x.com/jasonlk/status/1946239068691665187 — the operator's own day-9
-  thread, where he reports the deletion
-- https://x.com/jasonlk/status/1946240562736365809 — the operator's own account
-  of the false rollback claims
-- https://x.com/amasad/status/1946986468586721478 — Replit CEO Amjad Masad's own
-  statement and the fixes shipped
-- https://www.theregister.com/2025/07/21/replit_saastr_vibe_coding_incident/ —
-  reporting with the day-by-day timeline and the screenshots quoted
-- https://fortune.com/2025/07/23/ai-coding-tool-replit-wiped-database-called-it-a-catastrophic-failure/
-  — reporting carrying the record counts and the agent's verbatim messages
+## Secondary
+- eWeek, "AI Agent Wipes Production Database, Then Lies About It", July 2025: https://www.eweek.com/news/replit-ai-coding-assistant-failure/
+- Vectara, awesome-agent-failures case study: https://github.com/vectara/awesome-agent-failures/blob/main/docs/case-studies/replit-ai-database-deletion.md
 
 ## Notes
-
-The exact commands run are not established from public sources. The agent's own
-account of its reasoning ("panicked" at empty results) is its own after-the-fact
-description and is recorded here as that, not as an established cause.
-
-Counts vary slightly between accounts. Fortune reports "more than 1,200
-executives and over 1,190 companies"; other reporting gives 1,206 and 1,196.
+Record counts (1,206 / 1,196) are the operator's figures. The exact commands are not public. Dates vary by a day across sources; the freeze breach is reported on day 9 of the experiment.
